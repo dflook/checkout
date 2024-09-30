@@ -1,6 +1,6 @@
 FROM alpine
 
-RUN apk add --no-cache git jq
+RUN apk add --no-cache git
 
 RUN git config --global init.defaultBranch main \
  && git config --global gc.auto 0 \

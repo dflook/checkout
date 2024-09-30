@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+set -ex
 
 printenv
 
@@ -24,7 +24,7 @@ fi
 
 REF=${INPUT_REF:-$GITHUB_REF}
 
-rm -rf "${GITHUB_WORKSPACE:?}/$INPUT_PATH"
+#rm -rf "${GITHUB_WORKSPACE:?}/$INPUT_PATH"
 git -C "${GITHUB_WORKSPACE:?}/$INPUT_PATH" init "$GITHUB_WORKSPACE/$INPUT_PATH"
 git -C "${GITHUB_WORKSPACE:?}/$INPUT_PATH" remote add origin https://github.com/$INPUT_REPOSITORY
 git -C "${GITHUB_WORKSPACE:?}/$INPUT_PATH" fetch --depth=1 origin $REF
