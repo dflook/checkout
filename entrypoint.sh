@@ -25,7 +25,7 @@ fi
 REF=${INPUT_REF:-$GITHUB_REF}
 
 #rm -rf "${GITHUB_WORKSPACE:?}/$INPUT_PATH"
-git config --global --add safe.directory "${GITHUB_WORKSPACE:?}/$INPUT_PATH"
+git config --global --add safe.directory "${GITHUB_WORKSPACE:?}"
 git config --list --show-origin
 
 mkdir -p "${GITHUB_WORKSPACE:?}/$INPUT_PATH"
