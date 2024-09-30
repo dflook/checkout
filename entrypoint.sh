@@ -26,6 +26,9 @@ REF=${INPUT_REF:-$GITHUB_REF}
 
 #rm -rf "${GITHUB_WORKSPACE:?}/$INPUT_PATH"
 git config --global --add safe.directory "${GITHUB_WORKSPACE:?}/$INPUT_PATH"
+git config --list --show-origin
+
+mkdir -p "${GITHUB_WORKSPACE:?}/$INPUT_PATH"
 git -C "${GITHUB_WORKSPACE:?}/$INPUT_PATH" init "$GITHUB_WORKSPACE/$INPUT_PATH"
 git -C "${GITHUB_WORKSPACE:?}/$INPUT_PATH" remote add origin https://github.com/$INPUT_REPOSITORY
 git -C "${GITHUB_WORKSPACE:?}/$INPUT_PATH" fetch --depth=1 origin $REF
