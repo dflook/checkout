@@ -46,30 +46,36 @@ remote_branch_exists() {
 checkout_args() {
   ref=$1
 
-  if [ "$ref" = "refs/heads/*" ]; then
-    # remote branch
-    branch=$(echo "$ref" | sed 's|refs/heads/||')
-    echo "-B $branch refs/remotes/origin/$branch"
-  elif [ "$ref" = "refs/pull/*" ]; then
-    # pull request
-    pr_number=$(echo "$ref" | sed 's|refs/pull/||')
-    echo "refs/remotes/pull/$pr_number"
-  elif [ "$ref" = "refs/tags/*" ]; then
-    # qualified ref
-    echo "$ref"
-  elif [ "$ref" = "refs/*" ]; then
-    echo "$ref"
-  else
-    # unqualified ref
-
-    if remote_branch_exists "$ref"; then
+  case $ref in
+    refs/heads/*)
       # remote branch
-      echo "-B $ref refs/remotes/origin/$ref"
-    else
-      # must be a tag
-      echo "refs/tags/$ref"
-    fi
-  fi
+      branch=$(echo "$ref" | sed 's|refs/heads/||')
+      echo "-B $branch refs/remotes/origin/$branch"
+      ;;
+    refs/pull/*)
+      # pull request
+      pr_number=$(echo "$ref" | sed 's|refs/pull/||')
+      echo "refs/remotes/pull/$pr_number"
+      ;;
+    refs/tags/*)
+      # qualified ref
+      echo "$ref"
+      ;;
+    refs/*)
+      echo "$ref"
+      ;;
+    *)
+      # unqualified ref
+
+      if remote_branch_exists "$ref"; then
+        # remote branch
+        echo "-B $ref refs/remotes/origin/$ref"
+      else
+        # must be a tag
+        echo "refs/tags/$ref"
+      fi
+      ;;
+  esac
 
 }
 
